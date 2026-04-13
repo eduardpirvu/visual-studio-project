@@ -1,6 +1,6 @@
-#include <ctime>
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 using namespace std;
 int main() {
     srand(time(0));
@@ -14,6 +14,7 @@ int main() {
         if(n==randomnumber) {
             cout<<"congratulations, you guessed the number! you guessed the number in "<<attemptsused<<" tries";
             guessed=1;
+            break;
         }
 
         else if(n<randomnumber) {
@@ -28,5 +29,5 @@ int main() {
             break;
         }
     }
-    return 0;
+    return 0;   
 }
