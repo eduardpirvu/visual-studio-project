@@ -18,12 +18,10 @@ int main() {
 
         else if(n<randomnumber) {
             cout<<"too low, try again!";
-            guessed=0;
         }
 
         else if(n>randomnumber){
             cout<<"too high, try again!";
-            guessed=0;
         }
         if(attemptsleft==0) {
             cout<<"you failed to guess the number! the number is "<<randomnumber;
