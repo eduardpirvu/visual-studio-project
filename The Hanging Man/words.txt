@@ -1,0 +1,183 @@
+Animals,1,cat
+Animals,1,dog
+Animals,1,goat
+Animals,1,bear
+Animals,1,lion
+Animals,1,fish
+Animals,1,owl
+Animals,1,swan
+Animals,1,mouse
+Animals,1,cow
+Animals,2,rabbit
+Animals,2,donkey
+Animals,2,giraffe
+Animals,2,penguin
+Animals,2,dolphin
+Animals,2,monkey
+Animals,2,parrot
+Animals,2,otter
+Animals,2,beaver
+Animals,2,turtle
+Animals,3,elephant
+Animals,3,crocodile
+Animals,3,hedgehog
+Animals,3,kangaroo
+Animals,3,armadillo
+Animals,3,orangutan
+Animals,3,rhinoceros
+Animals,3,butterfly
+Animals,3,woodpecker
+Animals,3,salamander
+Fruits,1,apple
+Fruits,1,melon
+Fruits,1,grape
+Fruits,1,pear
+Fruits,1,fig
+Fruits,1,kiwi
+Fruits,1,lemon
+Fruits,1,plum
+Fruits,1,lime
+Fruits,1,berry
+Fruits,2,orange
+Fruits,2,banana
+Fruits,2,mango
+Fruits,2,papaya
+Fruits,2,avocado
+Fruits,2,nectarine
+Fruits,2,guava
+Fruits,2,apricot
+Fruits,2,coconut
+Fruits,2,cranberry
+Fruits,3,pomegranate
+Fruits,3,persimmon
+Fruits,3,dragonfruit
+Fruits,3,elderberry
+Fruits,3,boysenberry
+Fruits,3,starfruit
+Fruits,3,passionfruit
+Fruits,3,clementine
+Fruits,3,jackfruit
+Fruits,3,bloodorange
+Countries,1,spain
+Countries,1,italy
+Countries,1,china
+Countries,1,india
+Countries,1,egypt
+Countries,1,nepal
+Countries,1,laos
+Countries,1,cuba
+Countries,1,iran
+Countries,1,chile
+Countries,2,brazil
+Countries,2,canada
+Countries,2,japan
+Countries,2,germany
+Countries,2,australia
+Countries,2,portugal
+Countries,2,sweden
+Countries,2,finland
+Countries,2,uganda
+Countries,2,poland
+Countries,3,mozambique
+Countries,3,kyrgyzstan
+Countries,3,liechtenstein
+Countries,3,mauritius
+Countries,3,burkinafaso
+Countries,3,uzbekistan
+Countries,3,venezuela
+Countries,3,swaziland
+Countries,3,czechia
+Countries,3,gabon
+Technology,1,mouse
+Technology,1,phone
+Technology,1,modem
+Technology,1,screen
+Technology,1,cable
+Technology,1,router
+Technology,1,drive
+Technology,1,chip
+Technology,1,tablet
+Technology,1,video
+Technology,2,laptop
+Technology,2,network
+Technology,2,software
+Technology,2,internet
+Technology,2,keyboard
+Technology,2,database
+Technology,2,monitor
+Technology,2,scanner
+Technology,2,graphics
+Technology,2,firewall
+Technology,3,processor
+Technology,3,algorithm
+Technology,3,robotics
+Technology,3,encryption
+Technology,3,firmware
+Technology,3,interface
+Technology,3,virtualization
+Technology,3,microservice
+Technology,3,nanotechnology
+Technology,3,cybersecurity
+Movies,1,jumanji
+Movies,1,rocky
+Movies,1,titanic
+Movies,1,avatar
+Movies,1,aladdin
+Movies,1,casper
+Movies,1,memento
+Movies,1,frozen
+Movies,1,amulet
+Movies,1,psycho
+Movies,2,inception
+Movies,2,braveheart
+Movies,2,goodfellas
+Movies,2,amelie
+Movies,2,deadpool
+Movies,2,notebook
+Movies,2,skyfall
+Movies,2,findingnemo
+Movies,2,lionking
+Movies,2,cinderella
+Movies,3,casablanca
+Movies,3,citizenkane
+Movies,3,interstellar
+Movies,3,schindlers
+Movies,3,onceuponatime
+Movies,3,magnificentseven
+Movies,3,twelveangrymen
+Movies,3,amelie
+Movies,3,titanicreview
+Movies,3,groundhog
+Video Games,1,tetris
+Video Games,1,pong
+Video Games,1,mario
+Video Games,1,zelda
+Video Games,1,pacman
+Video Games,1,frogger
+Video Games,1,asteroids
+Video Games,1,galaga
+Video Games,1,centipede
+Video Games,1,donkeykong
+Video Games,1,fnaf
+Video Games,1,pvz
+Video Games,2,sonic
+Video Games,2,megaman
+Video Games,2,finalfantasy
+Video Games,2,streetfighter
+Video Games,2,metalgear
+Video Games,2,residentevil
+Video Games,2,thesims
+Video Games,2,worldofwarcraft
+Video Games,2,grandtheftauto
+Video Games,2,callofduty
+Video Games,2,minecraft
+Video Games,3,thelastofus
+Video Games,3,reddeadredemption
+Video Games,3,thewitcher
+Video Games,3,cyberpunk
+Video Games,3,godofwar
+Video Games,3,assassinscreed
+Video Games,3,skyrim
+Video Games,3,fallout
+Video Games,3,overwatch
+Video Games,3,leagueoflegends

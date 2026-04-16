@@ -1,0 +1,19 @@
+interstellar|100|3|Rocket Launch!:::/\:::  /\\    : /  \   :   /    \  :  /      \ : /        \:|          |: \        / :  \      /  :   \    /   :    \  /    :     \/     :    /||\\    :   //||\\\\   
+robot|100|2|Robot!  :/\_/\ :( o.o ) : > ^ < :/     \ :|       | :\     /  :\___/   
+mario|100|1|Mario Mushroom!:: ____  :/    \ :|  ()  | :\____/  :  ||||   :  ||||   
+zelda|100|2|Triforce!::     /\     :    /  \    :   /    \   :  /      \ : /        \  :\        / :  \      /  :   \    /   :    \  /    :     \/     
+pacman|100|1|Pac-Man!::   .-.   : .'   '.  :/       \:|       |: \     /   :  '---'  
+fnaf|100|3|Freddy Fazbear!::   .-\"\"\"-.   :  /       \   : |   O O   | :  \  ^^^  /  :   \_____ /   :    |   |    :   /     \   
+pvz|100|2|Peashooter!::     /\     :    /  \    :   /    \   :  /      \ : |        | :  \      /  :   \____/   :    ||||    
+minecraft|100|3|Creeper!::   .-\"\"\"-.   :  /       \   : |  O   O  | :  \  ^^^  /  :   \_____ /   :    |   |    :   /     \   
+python|50|3|Python Programming!::     ~~~::    / \   :   / O \  :  (^ _ ^) :   \ O / :    \ / :     ~
+java|50|2|Java Coffee!::   ___::  / o \   :/  |||  \:|  |o|  :|   |||   
+javascript|75|2|JavaScript Alert!::  /|_|\ ::  ~ ~ :: / O \ :\  | / =: X X
+c|100|3|C Language!::  _C_  :< o >:\___/::  | | : /   \
+cplusplus|100|3|C++ Power!::  ~~O~~  : /| |\  :\  T  /: | | |
+ninja|60|2|Ninja!::    /\ :   ^^  :  /  \  : >>---->
+dragon|40|3|Dragon!::   /_)\  :  /O O\  : { /||\ }
+unicorn|35|2|Unicorn!::    /\   :   ||   :  /||\ :  // \\
+Phoenix|45|3|Phoenix Rising!::    ~~~  :  /o o\ : (    ): \    /::    Y
+wizard|55|2|Wizard!::    /\   :   /  \ :  /    \ : |    |: /    \
+astronaut|70|3|Astronaut!::   (o_o) :  |\_/| :   |H|  : /| | |\\  :/|| ||\
