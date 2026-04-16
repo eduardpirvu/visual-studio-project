@@ -5,8 +5,244 @@
 #include <algorithm>  // For algorithms like find
 #include <ctime>      // For random number generation
 #include <cctype>     // For character functions like tolower
+#include <fstream>    // For file input/output
+#include <sstream>    // For string stream parsing
 
 using namespace std;
+
+// Structure to hold user account data
+struct User {
+    string username;
+    string password;
+    int totalGames = 0;
+    int wins = 0;
+    int losses = 0;
+    int totalScore = 0;
+    int highScore = 0;
+};
+
+// Function to save user data to file
+void saveUserData(const User& user) {
+    ifstream infile("accounts.txt");
+    vector<string> allLines;
+    string line;
+    bool userFound = false;
+
+    // Read existing file and update user if exists
+    if (infile.is_open()) {
+        while (getline(infile, line)) {
+            if (!line.empty()) {
+                stringstream ss(line);
+                string fileUsername;
+                getline(ss, fileUsername, '|');
+                
+                if (fileUsername == user.username) {
+                    // Update existing user
+                    allLines.push_back(user.username + "|" + user.password + "|" + 
+                                      to_string(user.totalGames) + "|" + 
+                                      to_string(user.wins) + "|" + 
+                                      to_string(user.losses) + "|" + 
+                                      to_string(user.totalScore) + "|" + 
+                                      to_string(user.highScore));
+                    userFound = true;
+                } else {
+                    allLines.push_back(line);
+                }
+            }
+        }
+        infile.close();
+    }
+
+    // If user not found, add new user
+    if (!userFound) {
+        allLines.push_back(user.username + "|" + user.password + "|" + 
+                          to_string(user.totalGames) + "|" + 
+                          to_string(user.wins) + "|" + 
+                          to_string(user.losses) + "|" + 
+                          to_string(user.totalScore) + "|" + 
+                          to_string(user.highScore));
+    }
+
+    // Write back to file
+    ofstream outfile("accounts.txt");
+    for (const string& userLine : allLines) {
+        outfile << userLine << endl;
+    }
+    outfile.close();
+}
+
+// Function to load user data from file
+User loadUserData(const string& username) {
+    User user;
+    user.username = username;
+    ifstream infile("accounts.txt");
+    string line;
+
+    if (infile.is_open()) {
+        while (getline(infile, line)) {
+            if (!line.empty()) {
+                stringstream ss(line);
+                string fileUsername, password, totalGames, wins, losses, totalScore, highScore;
+                
+                getline(ss, fileUsername, '|');
+                if (fileUsername == username) {
+                    getline(ss, password, '|');
+                    getline(ss, totalGames, '|');
+                    getline(ss, wins, '|');
+                    getline(ss, losses, '|');
+                    getline(ss, totalScore, '|');
+                    getline(ss, highScore, '|');
+
+                    user.password = password;
+                    user.totalGames = stoi(totalGames);
+                    user.wins = stoi(wins);
+                    user.losses = stoi(losses);
+                    user.totalScore = stoi(totalScore);
+                    user.highScore = stoi(highScore);
+                    break;
+                }
+            }
+        }
+        infile.close();
+    }
+
+    return user;
+}
+
+// Function to verify if user exists
+bool userExists(const string& username) {
+    ifstream infile("accounts.txt");
+    string line;
+
+    if (infile.is_open()) {
+        while (getline(infile, line)) {
+            if (!line.empty()) {
+                stringstream ss(line);
+                string fileUsername;
+                getline(ss, fileUsername, '|');
+                if (fileUsername == username) {
+                    infile.close();
+                    return true;
+                }
+            }
+        }
+        infile.close();
+    }
+
+    return false;
+}
+
+// Function to authenticate user login
+bool loginUser(const string& username, const string& password) {
+    if (!userExists(username)) {
+        return false;
+    }
+
+    ifstream infile("accounts.txt");
+    string line;
+
+    if (infile.is_open()) {
+        while (getline(infile, line)) {
+            if (!line.empty()) {
+                stringstream ss(line);
+                string fileUsername, filePassword;
+                getline(ss, fileUsername, '|');
+                getline(ss, filePassword, '|');
+                
+                if (fileUsername == username && filePassword == password) {
+                    infile.close();
+                    return true;
+                }
+            }
+        }
+        infile.close();
+    }
+
+    return false;
+}
+
+// Function to register a new user
+User registerUser() {
+    User newUser;
+    string username, password, passwordConfirm;
+
+    while (true) {
+        cout << "Enter a username: ";
+        cin >> username;
+
+        if (userExists(username)) {
+            cout << "\033[1;31mUsername already exists. Try a different one.\033[0m" << endl;
+            continue;
+        }
+
+        if (username.length() < 3) {
+            cout << "\033[1;31mUsername must be at least 3 characters long.\033[0m" << endl;
+            continue;
+        }
+
+        break;
+    }
+
+    while (true) {
+        cout << "Enter a password (at least 4 characters): ";
+        cin >> password;
+
+        if (password.length() < 4) {
+            cout << "\033[1;31mPassword must be at least 4 characters long.\033[0m" << endl;
+            continue;
+        }
+
+        cout << "Confirm your password: ";
+        cin >> passwordConfirm;
+
+        if (password != passwordConfirm) {
+            cout << "\033[1;31mPasswords don't match. Try again.\033[0m" << endl;
+            continue;
+        }
+
+        break;
+    }
+
+    newUser.username = username;
+    newUser.password = password;
+    saveUserData(newUser);
+
+    cout << "\n\033[1;32mAccount created successfully!\033[0m" << endl;
+    return newUser;
+}
+
+// Function to display login/register menu
+User authenticateUser() {
+    while (true) {
+        cout << "\n\033[1;33m=== Hangman - Account System ===\033[0m" << endl;
+        cout << "  \033[1;32m1. Login\033[0m" << endl;
+        cout << "  \033[1;32m2. Register\033[0m" << endl;
+        cout << "Choose an option (1 or 2): ";
+
+        string choice;
+        cin >> choice;
+
+        if (choice == "1") {
+            string username, password;
+            cout << "Enter your username: ";
+            cin >> username;
+            cout << "Enter your password: ";
+            cin >> password;
+
+            if (loginUser(username, password)) {
+                User user = loadUserData(username);
+                cout << "\n\033[1;32mLogin successful! Welcome, " << username << "!\033[0m" << endl;
+                return user;
+            } else {
+                cout << "\033[1;31mInvalid username or password. Try again.\033[0m" << endl;
+            }
+        } else if (choice == "2") {
+            return registerUser();
+        } else {
+            cout << "\033[1;31mInvalid choice. Enter 1 or 2.\033[0m" << endl;
+        }
+    }
+}
 
 // Function to display the hangman figure based on wrong guesses
 void displayHangman(int wrongGuesses) {
@@ -142,17 +378,15 @@ int main() {
         }}
     };
 
+    // Authenticate user
+    User currentUser = authenticateUser();
+
     // Initialize game statistics and achievement tracking
-    int totalGames = 0;          // Total games played
-    int wins = 0;                // Total wins
-    int losses = 0;              // Total losses
-    int totalScore = 0;          // Cumulative score
-    int highScore = 0;           // Highest single round score
     int consecutiveWins = 0;     // Current win streak
     vector<vector<set<string>>> guessedWords(categories.size(), vector<set<string>>(3));  // Tracks guessed words per category/difficulty for achievements
 
     // Welcome message
-    cout << "Welcome to Hangman!" << endl;
+    cout << "\n\033[1;32mWelcome to Hangman, " << currentUser.username << "!\033[0m" << endl;
 
     // Main game loop
     bool keepPlaying = true;
@@ -225,8 +459,12 @@ int main() {
 
             // Normalize guess to lowercase
             char guess = static_cast<char>(tolower(input[0]));
+            
+            // Validate that the input is a letter (restrict to alphabetic characters only)
+            // isalpha() checks if the character is a letter (A-Z, a-z)
+            // This prevents players from entering numbers, symbols, or special characters
             if (!isalpha(static_cast<unsigned char>(guess))) {
-                cout << "Please enter a valid letter." << endl;
+                cout << "Please enter a valid letter. No numbers or symbols allowed." << endl;
                 continue;
             }
 
@@ -303,17 +541,20 @@ int main() {
             consecutiveWins = 0;
         }
 
-        // Update statistics
-        totalGames++;
+        // Update user statistics
+        currentUser.totalGames++;
         if (won) {
-            wins++;
+            currentUser.wins++;
         } else {
-            losses++;
+            currentUser.losses++;
         }
-        totalScore += score;
-        if (score > highScore) {
-            highScore = score;
+        currentUser.totalScore += score;
+        if (score > currentUser.highScore) {
+            currentUser.highScore = score;
         }
+
+        // Save current user stats
+        saveUserData(currentUser);
 
         // Ask to continue or stop
         string answer;
@@ -338,12 +579,16 @@ int main() {
     }
 
     // Final statistics
-    cout << "Game over. High score summary:" << endl;
-    cout << "  Games played: " << totalGames << endl;
-    cout << "  Wins: " << wins << endl;
-    cout << "  Losses: " << losses << endl;
-    cout << "  Total score: " << totalScore << endl;
-    cout << "  Highest round score: " << highScore << endl;
+    cout << "\n\033[1;33mGame over. High score summary for " << currentUser.username << ":\033[0m" << endl;
+    cout << "  Games played: " << currentUser.totalGames << endl;
+    cout << "  Wins: " << currentUser.wins << endl;
+    cout << "  Losses: " << currentUser.losses << endl;
+    cout << "  Total score: " << currentUser.totalScore << endl;
+    cout << "  Highest round score: " << currentUser.highScore << endl;
+
+    // Save final stats
+    saveUserData(currentUser);
+    cout << "\n\033[1;32mYour stats have been saved. Thanks for playing!\033[0m" << endl;
 
     return 0;
 }
