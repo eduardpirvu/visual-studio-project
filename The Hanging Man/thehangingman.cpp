@@ -1,8 +1,10 @@
-﻿#include <iostream>
-#include <string>
-#include <vector>
-#include <ctime>
-#include <cctype>
+﻿#include <iostream>  // For input/output streams
+#include <string>     // For string handling
+#include <vector>     // For dynamic arrays (vectors)
+#include <set>        // For sets to track unique guessed words
+#include <algorithm>  // For algorithms like find
+#include <ctime>      // For random number generation
+#include <cctype>     // For character functions like tolower
 
 using namespace std;
 
@@ -140,21 +142,28 @@ int main() {
         }}
     };
 
-    int totalGames = 0;
-    int wins = 0;
-    int losses = 0;
-    int totalScore = 0;
-    int highScore = 0;
+    // Initialize game statistics and achievement tracking
+    int totalGames = 0;          // Total games played
+    int wins = 0;                // Total wins
+    int losses = 0;              // Total losses
+    int totalScore = 0;          // Cumulative score
+    int highScore = 0;           // Highest single round score
+    int consecutiveWins = 0;     // Current win streak
+    vector<vector<set<string>>> guessedWords(categories.size(), vector<set<string>>(3));  // Tracks guessed words per category/difficulty for achievements
 
+    // Welcome message
     cout << "Welcome to Hangman!" << endl;
 
+    // Main game loop
     bool keepPlaying = true;
     while (keepPlaying) {
+        // Difficulty selection menu
         cout << "\033[1;33mPick a difficulty by entering a number:\033[0m" << endl;
         for (size_t i = 0; i < difficulties.size(); ++i) {
             cout << "  \033[1;32m" << (i + 1) << ". " << difficulties[i] << "\033[0m" << endl;
         }
 
+        // Get valid difficulty choice
         int difficultyChoice = 0;
         while (difficultyChoice < 1 || difficultyChoice > static_cast<int>(difficulties.size())) {
             cout << "Enter a number between 1 and " << difficulties.size() << ": ";
@@ -165,11 +174,13 @@ int main() {
             }
         }
 
+        // Category selection menu
         cout << "\n\033[1;33mChoose a word class by entering a number:\033[0m" << endl;
         for (size_t i = 0; i < categories.size(); ++i) {
             cout << "  \033[1;32m" << (i + 1) << ". " << categories[i].first << "\033[0m" << endl;
         }
 
+        // Get valid category choice
         int categoryChoice = 0;
         while (categoryChoice < 1 || categoryChoice > static_cast<int>(categories.size())) {
             cout << "Enter a number between 1 and " << categories.size() << ": ";
@@ -180,16 +191,20 @@ int main() {
             }
         }
 
+        // Select random word from chosen category and difficulty
         const vector<string>& words = categories[categoryChoice - 1].second[difficultyChoice - 1];
         string secretWord = words[rand() % words.size()];
-        string guessedWord(secretWord.length(), '_');
-        int maxWrongGuesses = (difficultyChoice == 1 ? 8 : difficultyChoice == 2 ? 6 : 4);
+        string guessedWord(secretWord.length(), '_');  // Initialize guessed word with underscores
+        int maxWrongGuesses = (difficultyChoice == 1 ? 8 : difficultyChoice == 2 ? 6 : 4);  // Set max guesses based on difficulty
         int wrongGuesses = 0;
-        vector<char> wrongLetters;
+        vector<char> wrongLetters;  // List of incorrect guesses
 
+        // Confirm selection
         cout << "\nYou selected: " << difficulties[difficultyChoice - 1] << " difficulty, " << categories[categoryChoice - 1].first << "\n" << endl;
 
+        // Game loop for guessing
         while (wrongGuesses < maxWrongGuesses && guessedWord != secretWord) {
+            // Display current game state
             cout << "Current word: ";
             for (char c : guessedWord) cout << c << ' ';
             cout << endl;
@@ -199,6 +214,7 @@ int main() {
             cout << endl;
             displayHangman(wrongGuesses);
 
+            // Get player's guess
             cout << "Enter a letter: ";
             string input;
             cin >> input;
@@ -207,12 +223,14 @@ int main() {
                 continue;
             }
 
+            // Normalize guess to lowercase
             char guess = static_cast<char>(tolower(input[0]));
             if (!isalpha(static_cast<unsigned char>(guess))) {
                 cout << "Please enter a valid letter." << endl;
                 continue;
             }
 
+            // Check if already guessed
             bool alreadyGuessed = false;
             for (char c : wrongLetters) {
                 if (c == guess) {
@@ -232,6 +250,7 @@ int main() {
                 continue;
             }
 
+            // Check guess against secret word
             int occurrences = 0;
             for (size_t i = 0; i < secretWord.length(); ++i) {
                 if (secretWord[i] == guess) {
@@ -240,6 +259,7 @@ int main() {
                 }
             }
 
+            // Update game state
             if (occurrences == 0) {
                 wrongGuesses++;
                 wrongLetters.push_back(guess);
@@ -260,11 +280,30 @@ int main() {
             score = 10 + (maxWrongGuesses - wrongGuesses) * 2;
             cout << "You earned " << score << " points this round." << endl;
             displayEasterEgg(secretWord);
+
+            consecutiveWins++;
+            guessedWords[categoryChoice - 1][difficultyChoice - 1].insert(secretWord);
+
+            // Check achievements
+            if (consecutiveWins == 1) {
+                cout << "\033[1;36mAchievement Unlocked: First Victory!\033[0m" << endl;
+            } else if (consecutiveWins == 5) {
+                cout << "\033[1;36mAchievement Unlocked: Streak Master (5 wins in a row)!\033[0m" << endl;
+            } else if (consecutiveWins == 10) {
+                cout << "\033[1;36mAchievement Unlocked: Legendary Streak (10 wins in a row)!\033[0m" << endl;
+            }
+
+            const vector<string>& words = categories[categoryChoice - 1].second[difficultyChoice - 1];
+            if (guessedWords[categoryChoice - 1][difficultyChoice - 1].size() == words.size()) {
+                cout << "\033[1;36mAchievement Unlocked: Master of " << categories[categoryChoice - 1].first << " (" << difficulties[difficultyChoice - 1] << ")!\033[0m" << endl;
+            }
         } else {
             cout << "Sorry, you lost. The word was: " << secretWord << endl;
             score = 0;
+            consecutiveWins = 0;
         }
 
+        // Update statistics
         totalGames++;
         if (won) {
             wins++;
@@ -276,6 +315,7 @@ int main() {
             highScore = score;
         }
 
+        // Ask to continue or stop
         string answer;
         while (true) {
             cout << "\nWould you like to continue or stop? (c = continue, s = stop): ";
@@ -297,6 +337,7 @@ int main() {
         cout << endl;
     }
 
+    // Final statistics
     cout << "Game over. High score summary:" << endl;
     cout << "  Games played: " << totalGames << endl;
     cout << "  Wins: " << wins << endl;
